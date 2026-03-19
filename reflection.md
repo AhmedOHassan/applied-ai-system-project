@@ -45,6 +45,10 @@ The back-references were another thing I didn't plan for originally. A Task didn
 - What constraints does your scheduler consider (for example: time, priority, preferences)?
 - How did you decide which constraints mattered most?
 
+The scheduler considers two main constraints: available time and task priority. It sorts all tasks from highest to lowest priority, then greedily picks them until the owner's time runs out. Preferred time of day is also stored on each task, but it influences display and conflict detection rather than whether a task gets scheduled at all.
+
+Time and priority felt like the obvious starting point because they're the two things that actually determine whether something gets done, you can have a perfectly timed plan but if you only have 30 minutes, some tasks just won't happen, and priority decides which ones survive that cut.
+
 **b. Tradeoffs**
 
 - Describe one tradeoff your scheduler makes.
@@ -76,10 +80,16 @@ For this app that's fine. Most pet owners don't schedule their day down to the m
 - What behaviors did you test?
 - Why were these tests important?
 
+I tested three core behaviors: sorting (tasks come back in the right time order), recurrence (completing a daily task automatically creates one for the next day), and conflict detection (the scheduler flags when two tasks land in the same time slot). 
+
+These mattered because they're what the app actually does every day, if any of them break, the schedule either looks wrong, loses tasks silently, or misses overlaps the owner is counting on the app to catch.
+
 **b. Confidence**
 
 - How confident are you that your scheduler works correctly?
 - What edge cases would you test next if you had more time?
+
+Pretty confident in the happy path, all five tests pass and the core logic holds up. That said, I know there are gaps: I haven't tested what happens when available time is zero, when two pets have tasks in the same slot, or when a recurring task rolls over at the end of a month. Those are the ones I'd go after next, because they're the situations where date math and edge-of-budget logic are most likely to quietly break.
 
 ---
 
