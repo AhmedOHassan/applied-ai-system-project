@@ -63,3 +63,54 @@ python -m pytest tests/test_pawpal.py -v
 ### Confidence Level
 
 **5 / 5 stars**
+
+## ✨ Features
+
+### Priority-Based Greedy Scheduling
+Tasks are sorted by priority (high → medium → low) and greedily selected into the
+daily plan until the owner's available time is exhausted. High-priority tasks are
+always scheduled first, and lower-priority tasks are skipped if time runs out.
+
+### Conflict Detection
+After a schedule is generated, the app scans for tasks that share the same time
+slot (morning / afternoon / evening). Any slot with two or more tasks triggers a
+visible warning so the owner can adjust before the day begins.
+
+### Chronological Sorting by Time of Day
+The planned task list can be sorted by time slot (morning → afternoon → evening),
+with unscheduled tasks appended last. Sorting maps slot labels to fixed anchor
+times so the order is always consistent.
+
+### Daily & Weekly Recurrence
+Completing a `daily` or `weekly` task automatically creates the next occurrence
+due exactly one day or seven days later and attaches it to the same pet. Tasks
+marked `as needed` do not recur.
+
+### Completion Filtering
+The schedule view can be filtered to show all tasks, only pending tasks, or only
+completed tasks, letting the owner focus on what still needs to be done.
+
+### Multi-Pet Support
+A single schedule can span multiple pets. Tasks are tagged with their pet's name
+and displayed together in one unified plan, keeping a household with multiple
+animals organised in one view.
+
+### Inline Task Editing & Removal
+Any task can be edited (name, duration, priority, time slot) or removed directly
+from the UI without regenerating the whole schedule.
+
+### Scheduling Reasoning Log
+Every include/skip decision made during `generate()` is recorded in plain English
+and shown in a collapsible panel, so the owner always knows *why* a task was left
+out.
+
+## 📸 Demo
+
+<a href="app1.png" target="_blank">
+  <img src='app1.png' title='PawPal App1' width='' alt='PawPal App1' class='center-block' />
+</a>
+
+<a href="app2.png" target="_blank">
+  <img src='app2.png' title='PawPal App2' width='' alt='PawPal App2' class='center-block' />
+</a>
+

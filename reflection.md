@@ -66,10 +66,18 @@ For this app that's fine. Most pet owners don't schedule their day down to the m
 - How did you use AI tools during this project (for example: design brainstorming, debugging, refactoring)?
 - What kinds of prompts or questions were most helpful?
 
+I used AI mostly for two things: talking through design decisions early on, and generating test cases once the logic was built. For design, it helped to describe what the app needed to do in plain English and get back a structured breakdown of classes and responsibilities, it saved a lot of time that would've gone into staring at a blank page. For testing, I asked it to identify edge cases I might have missed, which caught a few scenarios I hadn't thought about like zero-budget scheduling and month-boundary recurrence.
+
+The most useful prompts were specific ones. Asking "what are the edge cases for a scheduler with recurring tasks?" got much better results than anything vague. Framing questions around behavior rather than code, like "what should happen when a daily task is completed?", also worked well because the answers mapped directly to what I needed to test.
+
 **b. Judgment and verification**
 
 - Describe one moment where you did not accept an AI suggestion as-is.
 - How did you evaluate or verify what the AI suggested?
+
+When I asked AI to help with conflict detection, it initially suggested comparing exact start times calculated from duration. I didn't go with that because the app doesn't track when tasks actually start, it only knows rough time-of-day labels like "morning" or "afternoon." Implementing clock-based math would've required reworking the whole Task model for a feature that didn't need that level of precision. 
+
+I verified the simpler slot-based approach by reasoning through a few real scenarios: if two tasks are both "morning," that's a genuine conflict worth flagging, and the owner can sort out the details themselves. The tests confirmed it behaved exactly that way.
 
 ---
 
@@ -99,10 +107,16 @@ Pretty confident in the happy path, all five tests pass and the core logic holds
 
 - What part of this project are you most satisfied with?
 
+The scheduling logic. The greedy priority-based approach ended up being clean and easy to reason about, and the reasoning log, where the schedule records why each task was included or skipped, made the whole thing feel transparent rather than like a black box.
+
 **b. What you would improve**
 
 - If you had another iteration, what would you improve or redesign?
 
+The conflict detection. Right now it only flags tasks that share a time label, but it has no idea how long each task actually takes or when it starts. I'd redesign it to work with real time windows so the warnings are more accurate and fewer false positives slip through.
+
 **c. Key takeaway**
 
 - What is one important thing you learned about designing systems or working with AI on this project?
+
+That AI is most useful when you already have a clear question. Vague prompts get vague answers. The moments where it actually moved the project forward were when I could describe exactly what behavior I needed or what problem I was stuck on, the more specific the input, the more useful the output.
