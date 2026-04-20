@@ -150,6 +150,7 @@ with tab_planner:
             st.info("Add at least one pet before creating tasks.")
         else:
             priority_map = {"low": 1, "medium": 2, "high": 3}
+            rev_priority_map = {v: k for k, v in priority_map.items()}
 
             c1, c2, c3, c4, c5 = st.columns([2, 2, 2, 2, 2])
             with c1:
@@ -208,7 +209,7 @@ with tab_planner:
                     c1.write(task.name)
                     c2.write(task.pet_name)
                     c3.write(task.duration_minutes)
-                    c4.write(task.priority)
+                    c4.write(rev_priority_map.get(task.priority, task.priority))
                     c5.write(task.preferred_time or "—")
                     if c6.button("Remove", key=f"remove_{i}"):
                         owner_pet = next(
@@ -238,7 +239,7 @@ with tab_planner:
                     st.caption(
                         f"Current — name: **{selected_task.name}** | "
                         f"duration: **{selected_task.duration_minutes} min** | "
-                        f"priority: **{selected_task.priority}** | "
+                        f"priority: **{rev_priority_map.get(selected_task.priority, selected_task.priority)}** | "
                         f"time: **{selected_task.preferred_time or '—'}**"
                     )
 
@@ -267,7 +268,7 @@ with tab_planner:
                     with e4:
                         new_time = st.selectbox(
                             "Preferred time",
-                            ["morning", "afternoon", "evening"],
+                            ["", "morning", "afternoon", "evening"],
                             index=0,
                             key=f"edit_time_{selected_name}",
                         )
@@ -277,6 +278,7 @@ with tab_planner:
                             not new_name
                             and new_duration is None
                             and not new_priority_label
+                            and not new_time
                         ):
                             st.warning("Change at least one field before saving.")
                         else:
@@ -291,7 +293,9 @@ with tab_planner:
                                 if new_priority_label
                                 else selected_task.priority
                             )
-                            selected_task.preferred_time = new_time
+                            selected_task.preferred_time = (
+                                new_time if new_time else selected_task.preferred_time
+                            )
                             st.success(f"Updated: {selected_task.name}")
                             st.rerun()
             else:
