@@ -41,7 +41,7 @@ All retrieval and API calls are written to `pawpal_rag.log` so every system acti
 ### 1. Clone the repository
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/AhmedOHassan/applied-ai-system-project.git
 cd applied-ai-system-project
 ```
 
@@ -269,3 +269,25 @@ The biggest surprise was how low TF-IDF cosine similarity scores are in practice
 <a href="assets/app3.png" target="_blank">
   <img src='assets/app3.png' title='PawPal app3' width='' alt='PawPal app3' class='center-block' />
 </a>
+
+---
+
+## Video Walkthrough
+
+🎥 **Loom walkthrough:** https://www.loom.com/share/0e32662743b640efa48dc62be8f82bea
+
+The walkthrough demonstrates:
+- End-to-end planner run (owner → pets → tasks → schedule generation)
+- RAG AI Assistant answering 2 questions with sources and confidence scores
+- Reliability features: live logging in the terminal and the full pytest suite passing
+
+---
+
+## Portfolio Artifact
+
+### GitHub link
+https://github.com/AhmedOHassan/applied-ai-system-project
+
+### Reflection
+
+This project shows I can build end-to-end, testable AI systems that prioritize reliability and explainability. I implemented a RAG pipeline, confidence scoring, and a logging layer that makes every retrieval and LLM call auditable. It demonstrates my focus on moving prototypes toward dependable, production-ready AI.
